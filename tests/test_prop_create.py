@@ -7,23 +7,15 @@ from dotenv import load_dotenv
 
 import os
 import json
-from pathlib import Path
 from devtools import debug
 
-from hubspot_sdk.common import StandardObjects
 from hubspot_sdk.common import PropertyType
 from hubspot_sdk.common import FieldType
-from hubspot_sdk.schema.builder import SchemaBuilder
-from hubspot_sdk.schema.builder import SchemaDefinition
-from hubspot_sdk.schema.builder import SchemaParser
 from hubspot_sdk.schema.builder import PropertyDefinition
 from hubspot_sdk.context import HubSpotContext
 
 
 load_dotenv()
-
-MODPATH = Path(__file__).parent
-DATAPATH = MODPATH.parent / 'data'
 
 
 def test_main():
