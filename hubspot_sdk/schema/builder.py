@@ -4,8 +4,10 @@ if TYPE_CHECKING:
     pass
 
 import yaml
+import csv
 
 from yaml import Loader
+from pathlib import Path
 from dataclasses import dataclass
 
 from hubspot_sdk.common import StandardObjects
@@ -150,16 +152,22 @@ class SchemaBuilder:
 
         return schema
 
-    def from_yaml(self, path: str) -> dict[str, Any]:
-        parser = SchemaParser(path)
-        return parser.data
+    def from_json(self, json_path: str) -> dict[str, Any]:
+        return {}
 
 
 class SchemaParser:
 
-    def __init__(self, path: str) -> None:
+    def __init__(self, path: Path | str) -> None:
         self.path = path
-        self.data = {}
+        self.data = []
 
-        with open(path) as f:
-            self.data = yaml.load(f.read(), Loader)
+    def load_csv(self, filename: str) -> None:
+        if isinstance(self.path, str):
+            filepath = Path(self.path) / filename
+        else:
+            filepath = self.path / filename
+
+        with open(str(filepath), mode='r', newline='') as csvfile:
+            reader = csv.DictReader(csvfile)
+            self.data = list(reader)
